@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Project Documentation</title>
+    <meta charset="UTF-8" />
+</head>
+<body>
+<h1>Sudoku documentation</h1>
+<p>Short summary for the Sudoku game</p>
+<h2>Structure</h2>
+<p>The structure of the game is separated to 3 parts</p>
+<ol>
+    <li>
+        <h3>sudoku</h3>
+        <p>Contains the logic of the game and can be divided to parts</p>
+        <ol>
+            <li>
+                <h4>SudokuGenerator</h4>
+                <p>Purpose of this class is to handle building of sudoku</p>
+            </li>
+            <li>
+                <h4>SolveHinter</h4>
+                <p>This class is to provide artificial solving/hinting without player</p>
+            </li>
+            <li>
+                <h4>Validator</h4>
+                <p>And last most important is validator which handles validating if sudoku is still solvable</p>
+            </li>
+        </ol>
+        <p>In Game class all these 3 are connected. Game provides model of game with logic from start to end</p>
+    </li>
+    <li>
+        <h3>IO</h3>
+        <p>Handles the input and output</p>
+        <ol>
+            <li>
+                <h4>Writer</h4>
+                <p>Writes on terminal, helps to show the board</p>
+            </li>
+            <li>
+                <h4>Reader</h4>
+                <p>Reads from terminal and parse the message</p>
+            </li>
+            <li>
+                <h4>Option</h4>
+                <p>Enum for tokenizing the readings</p>
+            </li>
+        </ol>
+    </li>
+    <li>App is the main part of the project, in this class are connected logic of the game with the input/output classes</li>
+</ol>
+
+</body>
+</html>

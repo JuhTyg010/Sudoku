@@ -1,0 +1,49 @@
+User documentation
+
+To run the application you need to build package and run it with the following command:
+
+in this directory run:
+mvn package
+java -cp target/Sudoku-1.0.jar cz.cuni.mff.sadovsm.App
+
+The application will start and asks you to select the difficulty of the sudoku you want to solve.
+You can choose from easy, medium and hard. After you select the difficulty, the application will
+generate a sudoku puzzle to solve.
+
+After the puzzle is generated, you can write commands to solve the puzzle. The commands are as follows:
+    restart -   generate new sudoku
+                this command will ask you to select the difficulty of the new sudoku and then generate it
+
+    solve -     solve the sudoku
+                this command will solve the sudoku and show you the solution if it is solvable, there are cases where you
+                can't solve the sudoku and the application will tell you that
+
+    quit -      quit the game
+                this command will quit the game
+
+    help -      show massage about commands
+                this command will show you short message with possible commands
+
+    <coordinates> <value> -    fill the cell with value
+                                    this command will fill the cell with the value you specify
+                                    <coordinates> - coordinates of the cell you want to fill in column-row format (e.g. A1)
+                                    <value> - value you want to fill the cell with (1-9)
+
+    possible <coordinates> -    show possible values for the cell
+                                this command will show you possible values for the cell you specify
+                                <coordinates> - coordinates of the cell you want to check in column-row format (e.g. A1)
+
+    hint -  show hint for the next move
+            this command will show you hint for the next move in the form of coordinates and value
+
+    auto -  fill one cell automatically
+            this command will fill one cell automatically (asks for hint and fills the cell)
+
+    undo -  undo the last move
+            this command will undo the last move you made
+
+After every command you will see the sudoku puzzle with your changes. And the massage if the sudoku is still solvable.
+If you fill something incorrectly but the mistake is not visible yet, the application will tell you that the sudoku is not solvable.
+If it's visible the application won't let you fill the cell with the wrong value.
+
+After solving the sudoku program will show you the solution and close.
