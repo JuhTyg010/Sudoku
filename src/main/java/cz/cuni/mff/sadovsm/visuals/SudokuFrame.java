@@ -6,13 +6,20 @@ import java.awt.BorderLayout;
 
 public class SudokuFrame extends JFrame {
     private SudokuPanel sudokuPanel;
+    private MenuPanel menuPanel;
 
     public SudokuFrame() {
         setTitle("Sudoku");
-        setSize(400, 400);
+        setSize(600, 400);
         setLocationRelativeTo(null);
 
+        // Create panels
         sudokuPanel = new SudokuPanel();
+        menuPanel = new MenuPanel();
+
+        // Add panels to the frame
+        setLayout(new BorderLayout());
+        add(menuPanel, BorderLayout.WEST);
         add(sudokuPanel, BorderLayout.CENTER);
     }
 }
