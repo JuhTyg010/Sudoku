@@ -4,7 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.net.URI;
 
-public class MenuFrame extends JFrame {
+public class MenuPanel extends JPanel {
     private JButton startButton;
     private JButton exitButton;
     private JButton docButton;
@@ -14,12 +14,9 @@ public class MenuFrame extends JFrame {
     private ButtonGroup difficultyGroup;
     private JPanel ratioPanel;
 
-    public MenuFrame(JFrame gameFrame) {
-        setTitle("Sudoku");
-        setSize(600, 400);
-        setLocationRelativeTo(null);
+    public MenuPanel() {
 
-        setLayout(new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS));
+
 
         startButton = new JButton("Start");
         startButton.setSize(new Dimension(200,50));
@@ -48,12 +45,12 @@ public class MenuFrame extends JFrame {
         add(exitButton);
 
         // Add action listeners
-        startButton.addActionListener(e -> startApp(gameFrame));
+        startButton.addActionListener(e -> startApp());
         exitButton.addActionListener(e -> System.exit(0));
         docButton.addActionListener(e -> openDocumentation());
     }
 
-    private void startApp(JFrame gameFrame) {
+    private void startApp() {
         // Logic to start the app, depending on the selected difficulty level
         if (easyButton.isSelected()) {
             System.out.println("Starting game in Easy mode");
@@ -64,7 +61,6 @@ public class MenuFrame extends JFrame {
         } else {
             System.out.println("No difficulty selected, defaulting to Easy");
         }
-        gameFrame.setVisible(true);
 
     }
 
