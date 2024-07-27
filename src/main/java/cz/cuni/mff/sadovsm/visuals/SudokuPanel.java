@@ -12,7 +12,12 @@ import javax.swing.border.MatteBorder;
 public class SudokuPanel extends JPanel {
     private JButton[][] cells;
 
+
     public SudokuPanel() {
+        int width = this.getWidth();
+        int height = this.getHeight();
+        if (width > height) setPreferredSize(new Dimension(height,height));
+        else setPreferredSize(new Dimension(width,width));
         setLayout(new GridLayout(9, 9));
         cells = new JButton[9][9];
 
