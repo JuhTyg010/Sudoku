@@ -1,5 +1,7 @@
 package cz.cuni.mff.sadovsm.visuals;
 
+import cz.cuni.mff.sadovsm.sudoku.Game;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -11,6 +13,7 @@ import javax.swing.border.MatteBorder;
 
 public class SudokuPanel extends JPanel {
     private JButton[][] cells;
+    private Game game;
 
 
     public SudokuPanel() {
@@ -43,6 +46,8 @@ public class SudokuPanel extends JPanel {
                 add(cells[row][col]);
             }
         }
+
+
     }
 
     public void setCellValue(int row, int col, int value) {
@@ -54,8 +59,14 @@ public class SudokuPanel extends JPanel {
         return text.isEmpty() ? 0 : Integer.parseInt(text);
     }
 
-    private void lockPrefilled(JButton[][] cells){
-        //TODO: implement logic to be able on start block some of the position.
+    public void lockPrefilled(){
+        for (JButton[] cell : cells) {
+            for (int j = 0; j < cells[0].length; j++) {
+                if (!cell[j].getText().isEmpty()) {
+                    cell[j].setEnabled(false);
+                }
+            }
+        }
     }
 
     private Border getCellBorder(int row, int col) {
