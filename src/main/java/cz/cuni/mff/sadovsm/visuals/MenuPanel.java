@@ -5,25 +5,20 @@ import java.awt.*;
 import java.net.URI;
 
 public class MenuPanel extends JPanel {
-    private JButton startButton;
-    private JButton exitButton;
-    private JButton docButton;
-    private JRadioButton easyButton;
-    private JRadioButton mediumButton;
-    private JRadioButton hardButton;
-    private ButtonGroup difficultyGroup;
-    private JPanel ratioPanel;
+    private final JRadioButton easyButton;
+    private final JRadioButton mediumButton;
+    private final JRadioButton hardButton;
 
-    private SudokuFrame controller;
+    private final SudokuFrame controller;
 
     public MenuPanel(SudokuFrame controller_) {
 
 
         controller = controller_;
-        startButton = new JButton("Start");
+        JButton startButton = new JButton("Start");
         startButton.setSize(new Dimension(200,50));
-        exitButton = new JButton("Exit");
-        docButton = new JButton("Open Documentation");
+        JButton exitButton = new JButton("Exit");
+        JButton docButton = new JButton("Open Documentation");
 
         easyButton = new JRadioButton("Easy");
         mediumButton = new JRadioButton("Medium");
@@ -31,12 +26,12 @@ public class MenuPanel extends JPanel {
 
         mediumButton.setSelected(true);
 
-        difficultyGroup = new ButtonGroup();
+        ButtonGroup difficultyGroup = new ButtonGroup();
         difficultyGroup.add(easyButton);
         difficultyGroup.add(mediumButton);
         difficultyGroup.add(hardButton);
 
-        ratioPanel = new JPanel();
+        JPanel ratioPanel = new JPanel();
         ratioPanel.add(easyButton);
         ratioPanel.add(mediumButton);
         ratioPanel.add(hardButton);
