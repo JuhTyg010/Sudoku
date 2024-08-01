@@ -14,10 +14,12 @@ public class MenuPanel extends JPanel {
     private ButtonGroup difficultyGroup;
     private JPanel ratioPanel;
 
-    public MenuPanel() {
+    private SudokuFrame controller;
+
+    public MenuPanel(SudokuFrame controller_) {
 
 
-
+        controller = controller_;
         startButton = new JButton("Start");
         startButton.setSize(new Dimension(200,50));
         exitButton = new JButton("Exit");
@@ -54,13 +56,18 @@ public class MenuPanel extends JPanel {
         // Logic to start the app, depending on the selected difficulty level
         if (easyButton.isSelected()) {
             System.out.println("Starting game in Easy mode");
+            controller.gameStart(1);
         } else if (mediumButton.isSelected()) {
             System.out.println("Starting game in Medium mode");
+            controller.gameStart(2);
         } else if (hardButton.isSelected()) {
             System.out.println("Starting game in Hard mode");
+            controller.gameStart(3);
         } else {
             System.out.println("No difficulty selected, defaulting to Easy");
+            controller.gameStart(1);
         }
+
 
     }
 
