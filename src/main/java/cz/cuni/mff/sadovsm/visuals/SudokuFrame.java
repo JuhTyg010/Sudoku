@@ -4,7 +4,7 @@ import javax.swing.JFrame;
 import java.awt.BorderLayout;
 
 public class SudokuFrame extends JFrame {
-    private SudokuPanel sudokuPanel;
+    private GamePanel gamePanel;
     private MenuPanel menuPanel;
 
 
@@ -14,16 +14,19 @@ public class SudokuFrame extends JFrame {
         setLocationRelativeTo(null);
 
         // Create panels
-        sudokuPanel = new SudokuPanel();
-        menuPanel = new MenuPanel();
+        menuPanel = new MenuPanel(this);
 
 
         // Add panels to the frame
         setLayout(new BorderLayout());
-
-        add(sudokuPanel, BorderLayout.CENTER);
-        sudokuPanel.setVisible(false);
         add(menuPanel, BorderLayout.CENTER);
+    }
+
+    public void gameStart(int difficulty){
+        gamePanel = new GamePanel(difficulty);
+        setLayout(new BorderLayout());
+        add(gamePanel, BorderLayout.CENTER);
+        menuPanel.setVisible(false);
     }
 
 }
