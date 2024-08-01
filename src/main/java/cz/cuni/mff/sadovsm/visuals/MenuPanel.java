@@ -56,16 +56,16 @@ public class MenuPanel extends JPanel {
         // Logic to start the app, depending on the selected difficulty level
         if (easyButton.isSelected()) {
             System.out.println("Starting game in Easy mode");
-            controller.gameStart(1);
+            controller.gameStart(30);
         } else if (mediumButton.isSelected()) {
             System.out.println("Starting game in Medium mode");
-            controller.gameStart(2);
+            controller.gameStart(50);
         } else if (hardButton.isSelected()) {
             System.out.println("Starting game in Hard mode");
-            controller.gameStart(3);
+            controller.gameStart(65);
         } else {
             System.out.println("No difficulty selected, defaulting to Easy");
-            controller.gameStart(1);
+            controller.gameStart(30);
         }
 
 
