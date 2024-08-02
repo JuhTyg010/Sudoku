@@ -1,6 +1,8 @@
 package cz.cuni.mff.sadovsm.visuals;
 
-import cz.cuni.mff.sadovsm.sudoku.Game;
+
+import cz.cuni.mff.sadovsm.sudoku.SudokuGenerator;
+import cz.cuni.mff.sadovsm.sudoku.SudokuValidator;
 
 import javax.swing.*;
 import java.awt.*;
@@ -8,15 +10,24 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.Stack;
 import javax.swing.border.Border;
 import javax.swing.border.MatteBorder;
 
 public class SudokuPanel extends JPanel {
     private JButton[][] cells;
-    private Game game;
+
+    private static final int EMPTY_CELL = 0;
+    private int[][] grid;
+    private Stack<int[]> moves;
+    private int toComplete;
+    private boolean isUndo;
+    private JTextField messageText;
 
 
-    public SudokuPanel() {
+    public SudokuPanel(int difficulty, JTextField messageText_) {
+        messageText = messageText_;
+        moves = new Stack<int[]>();
         int width = this.getWidth();
         int height = this.getHeight();
         if (width > height) setPreferredSize(new Dimension(height,height));
@@ -38,20 +49,36 @@ public class SudokuPanel extends JPanel {
 
                 // Set alternating background colors for better visual distinction
                 if ((row / 3 + col / 3) % 2 == 0) {
-                    cells[row][col].setBackground(new Color(220, 220, 220)); // Light gray
+                    cells[row][col].setBackground(new Color(220, 220, 220)); // Dark gray
                 } else {
-                    cells[row][col].setBackground(new Color(245, 245, 245)); // Slightly darker gray
+                    cells[row][col].setBackground(new Color(245, 245, 245)); // Slightly Lighter gray
                 }
 
                 add(cells[row][col]);
             }
         }
 
+        doPrefill(difficulty);
+        messageText_.setText("welcome");
 
+    }
+    private void doPrefill(int difficulty){
+        grid = SudokuGenerator.generateSudoku(difficulty);
+        for(int i = 0; i < 9 ; i++){
+            for(int j = 0; j < 9; j++){
+                if(grid[i][j] != EMPTY_CELL)
+                    setCellValue(i, j, grid[i][j]);
+            }
+        }
+        lockPrefilled();
+    }
+
+    public int[][] getGrid(){
+        return grid;
     }
 
     public void setCellValue(int row, int col, int value) {
-        cells[row][col].setText(value == 0 ? "" : String.valueOf(value));
+        cells[row][col].setText(value == EMPTY_CELL ? "" : String.valueOf(value));
     }
 
     public int getCellValue(int row, int col) {
@@ -111,6 +138,7 @@ public class SudokuPanel extends JPanel {
 
             // Add a mouse listener to close the dialog when clicking outside of it
             numberDialog.addMouseListener(new MouseAdapter() {
+                //TODO: fix this cause it doesn't work
                 @Override
                 public void mouseClicked(MouseEvent e) {
                     if (!numberDialog.getBounds().contains(e.getLocationOnScreen())) {
@@ -125,7 +153,7 @@ public class SudokuPanel extends JPanel {
     }
 
 
-
+    //TODO: move this to gamePanel where we check possibility and save change
     private class NumberButtonListener implements ActionListener {
         private int row;
         private int col;
@@ -141,7 +169,23 @@ public class SudokuPanel extends JPanel {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            setCellValue(row, col, number);
+            grid[row][col] = number;
+            if(SudokuValidator.isValidSudoku(grid)){
+                moves.push(new int[]{row, col});
+
+                toComplete--;
+                if(SudokuGenerator.isSolvable(grid)){
+                    messageText.setText("Sudoku is solvable");
+                } else {
+                    messageText.setText("Sudoku is not solvable");
+                }
+                setCellValue(row, col, number);
+            } else {
+                grid[row][col] = EMPTY_CELL;
+                setCellValue(row, col, EMPTY_CELL);
+                messageText.setText("Invalid move");
+            }
+
             dialog.dispose();
         }
     }
