@@ -2,6 +2,7 @@ package cz.cuni.mff.sadovsm.visuals;
 
 
 import cz.cuni.mff.sadovsm.sudoku.SudokuGenerator;
+import cz.cuni.mff.sadovsm.sudoku.SudokuSolveHinter;
 import cz.cuni.mff.sadovsm.sudoku.SudokuValidator;
 
 import javax.swing.*;
@@ -13,6 +14,7 @@ import java.awt.event.MouseEvent;
 import java.util.Stack;
 import javax.swing.border.Border;
 import javax.swing.border.MatteBorder;
+import javax.swing.plaf.ColorUIResource;
 
 public class SudokuPanel extends JPanel {
     private JButton[][] cells;
@@ -21,18 +23,21 @@ public class SudokuPanel extends JPanel {
     private int[][] grid;
     private Stack<int[]> moves;
     private int toComplete;
-    private boolean isUndo;
     private JTextField messageText;
 
 
     public SudokuPanel(int difficulty, JTextField messageText_) {
         messageText = messageText_;
-        moves = new Stack<int[]>();
+        moves = new Stack<>();
+        toComplete = 9 * 9;
+
         int width = this.getWidth();
         int height = this.getHeight();
         if (width > height) setPreferredSize(new Dimension(height,height));
         else setPreferredSize(new Dimension(width,width));
+
         setLayout(new GridLayout(9, 9));
+        UIManager.put("Button.disabledText", new ColorUIResource(Color.BLACK)); // To edit color of the disabled buttons(positions)
         cells = new JButton[9][9];
 
         for (int row = 0; row < 9; row++) {
@@ -66,11 +71,17 @@ public class SudokuPanel extends JPanel {
         grid = SudokuGenerator.generateSudoku(difficulty);
         for(int i = 0; i < 9 ; i++){
             for(int j = 0; j < 9; j++){
-                if(grid[i][j] != EMPTY_CELL)
+                if(grid[i][j] != EMPTY_CELL){
                     setCellValue(i, j, grid[i][j]);
+                    toComplete--;
+                }
             }
         }
         lockPrefilled();
+    }
+
+    public boolean isFinished(){
+        return toComplete == 0;
     }
 
     public int[][] getGrid(){
@@ -81,9 +92,31 @@ public class SudokuPanel extends JPanel {
         cells[row][col].setText(value == EMPTY_CELL ? "" : String.valueOf(value));
     }
 
-    public int getCellValue(int row, int col) {
-        String text = cells[row][col].getText();
-        return text.isEmpty() ? 0 : Integer.parseInt(text);
+
+    public String autofill(){
+        int[] hint = SudokuSolveHinter.posHint(grid);
+        if(hint[0] == -1){
+            return "I wasn't able to fill any of those positions";
+        }
+        grid[hint[0]][hint[1]] = hint[2];
+        setCellValue(hint[0], hint[1], hint[2]);
+        moves.push(new int[]{hint[0], hint[1]});
+        toComplete--;
+        return "One value was successfully filled";
+    }
+
+    public String undo(){
+        if(moves.isEmpty()){
+            return "There is no move which can be undone";
+        }
+        int[] pos = moves.pop();
+        toComplete++;
+        grid[pos[0]][pos[1]] = EMPTY_CELL;
+        setCellValue(pos[0],pos[1], EMPTY_CELL);
+        if(SudokuGenerator.isSolvable(grid)){
+            return "Moved back. Sudoku is solvable.";
+        }
+        return "Moved back, but sudoku still isn't solvable";
     }
 
     public void lockPrefilled(){
@@ -91,6 +124,8 @@ public class SudokuPanel extends JPanel {
             for (int j = 0; j < cells[0].length; j++) {
                 if (!cell[j].getText().isEmpty()) {
                     cell[j].setEnabled(false);
+                } else{
+                    cell[j].setForeground(Color.BLUE);
                 }
             }
         }
