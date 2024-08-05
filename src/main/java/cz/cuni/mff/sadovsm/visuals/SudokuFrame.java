@@ -1,7 +1,7 @@
 package cz.cuni.mff.sadovsm.visuals;
 
 import javax.swing.*;
-import java.awt.BorderLayout;
+import java.awt.*;
 
 public class SudokuFrame extends JFrame {
     private GamePanel gamePanel;
@@ -35,10 +35,11 @@ public class SudokuFrame extends JFrame {
         JDialog endDialog = new JDialog(this, "Game end");
 
         endDialog.setUndecorated(true);
-        endDialog.setSize(400,200);
+        endDialog.setSize(300,150);
         endDialog.setLocationRelativeTo(null);
 
         JLabel text = new JLabel("Congratulation");
+        text.setFont(new Font("Arial", Font.BOLD, 30));
 
         JButton menuButton = new JButton("Go to menu");
         menuButton.addActionListener(e -> {
@@ -46,15 +47,37 @@ public class SudokuFrame extends JFrame {
             gamePanel.setVisible(false);
             endDialog.dispose();
         });
+        menuButton.setPreferredSize(new Dimension(120,40));
 
         JButton exitButton = new JButton("Exit");
         exitButton.addActionListener(e -> {
             System.exit(0);
         });
+        exitButton.setPreferredSize(new Dimension(120,40));
 
-        endDialog.add(text);
-        endDialog.add(menuButton);
-        endDialog.add(exitButton);
+        endDialog.setLayout(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.weightx = 2;
+        gbc.weighty = 2;
+        gbc.fill = GridBagConstraints.NONE;
+
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.gridheight = 1;
+        gbc.gridwidth = 2;
+        endDialog.add(text, gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        gbc.gridheight = 1;
+        gbc.gridwidth = 1;
+        endDialog.add(menuButton, gbc);
+
+        gbc.gridx = 1;
+        gbc.gridy = 1;
+        gbc.gridheight = 1;
+        gbc.gridwidth = 1;
+        endDialog.add(exitButton, gbc);
 
         return endDialog;
     }
