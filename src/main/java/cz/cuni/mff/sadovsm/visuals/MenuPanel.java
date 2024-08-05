@@ -16,9 +16,13 @@ public class MenuPanel extends JPanel {
 
         controller = controller_;
         JButton startButton = new JButton("Start");
-        startButton.setSize(new Dimension(200,50));
+        startButton.setPreferredSize(new Dimension(180,50));
+
         JButton exitButton = new JButton("Exit");
+        exitButton.setPreferredSize(new Dimension(180,50));
+
         JButton docButton = new JButton("Open Documentation");
+        docButton.setPreferredSize(new Dimension(180,50));
 
         easyButton = new JRadioButton("Easy");
         mediumButton = new JRadioButton("Medium");
@@ -36,10 +40,26 @@ public class MenuPanel extends JPanel {
         ratioPanel.add(mediumButton);
         ratioPanel.add(hardButton);
 
-        add(startButton);
-        add(ratioPanel);
-        add(docButton);
-        add(exitButton);
+        setLayout(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.weightx = 1;
+        gbc.weighty = 4;
+
+
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.gridwidth = 1;
+        gbc.gridheight = 1;
+        add(startButton, gbc);
+
+        gbc.gridy = 1;
+        add(ratioPanel, gbc);
+
+        gbc.gridy = 2;
+        add(docButton, gbc);
+
+        gbc.gridy = 3;
+        add(exitButton, gbc);
 
         // Add action listeners
         startButton.addActionListener(e -> startApp());
