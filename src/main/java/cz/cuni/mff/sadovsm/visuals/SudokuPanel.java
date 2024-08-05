@@ -30,10 +30,10 @@ public class SudokuPanel extends JPanel {
         moves = new Stack<>();
         toComplete = 9 * 9;
 
-        int width = this.getWidth();
+        /*int width = this.getWidth();
         int height = this.getHeight();
         if (width > height) setPreferredSize(new Dimension(height,height));
-        else setPreferredSize(new Dimension(width,width));
+        else setPreferredSize(new Dimension(width,width));*/
 
         setLayout(new GridLayout(9, 9));
         UIManager.put("Button.disabledText", new ColorUIResource(Color.BLACK)); // To edit color of the disabled buttons(positions)
@@ -89,7 +89,6 @@ public class SudokuPanel extends JPanel {
 
     public void setCellValue(int row, int col, int value) {
         cells[row][col].setText(value == EMPTY_CELL ? "" : String.valueOf(value));
-        //TODO: check if is sudoku complete, if yes show little dialog which will give options to play new game or to go to menu
         System.out.println(toComplete);
         if(toComplete <= 0){
             JDialog end = controller.GameEnd();
@@ -180,7 +179,6 @@ public class SudokuPanel extends JPanel {
         }
     }
 
-    //TODO: move this to gamePanel where we check possibility and save change
     private class NumberButtonListener implements ActionListener {
         private int row;
         private int col;
