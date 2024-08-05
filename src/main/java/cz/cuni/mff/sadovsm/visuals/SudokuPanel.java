@@ -7,10 +7,7 @@ import cz.cuni.mff.sadovsm.sudoku.SudokuValidator;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.*;
 import java.util.Stack;
 import javax.swing.border.Border;
 import javax.swing.border.MatteBorder;
@@ -24,10 +21,12 @@ public class SudokuPanel extends JPanel {
     private Stack<int[]> moves;
     private int toComplete;
     private JTextField messageText;
+    private SudokuFrame controller;
 
 
-    public SudokuPanel(int difficulty, JTextField messageText_) {
+    public SudokuPanel(SudokuFrame controller_, int difficulty, JTextField messageText_) {
         messageText = messageText_;
+        controller = controller_;
         moves = new Stack<>();
         toComplete = 9 * 9;
 
@@ -72,8 +71,8 @@ public class SudokuPanel extends JPanel {
         for(int i = 0; i < 9 ; i++){
             for(int j = 0; j < 9; j++){
                 if(grid[i][j] != EMPTY_CELL){
-                    setCellValue(i, j, grid[i][j]);
                     toComplete--;
+                    setCellValue(i, j, grid[i][j]);
                 }
             }
         }
@@ -90,6 +89,14 @@ public class SudokuPanel extends JPanel {
 
     public void setCellValue(int row, int col, int value) {
         cells[row][col].setText(value == EMPTY_CELL ? "" : String.valueOf(value));
+        //TODO: check if is sudoku complete, if yes show little dialog which will give options to play new game or to go to menu
+        System.out.println(toComplete);
+        if(toComplete <= 0){
+            JDialog end = controller.GameEnd();
+
+            System.out.println("done");
+            end.setVisible(true);
+        }
     }
 
 
@@ -99,9 +106,9 @@ public class SudokuPanel extends JPanel {
             return "I wasn't able to fill any of those positions";
         }
         grid[hint[0]][hint[1]] = hint[2];
-        setCellValue(hint[0], hint[1], hint[2]);
         moves.push(new int[]{hint[0], hint[1]});
         toComplete--;
+        setCellValue(hint[0], hint[1], hint[2]);
         return "One value was successfully filled";
     }
 
@@ -140,8 +147,6 @@ public class SudokuPanel extends JPanel {
         return new MatteBorder(top, left, bottom, right, Color.BLACK);
     }
 
-
-
     private class CellButtonListener implements ActionListener {
         private int row;
         private int col;
@@ -152,8 +157,8 @@ public class SudokuPanel extends JPanel {
         }
 
         @Override
-        public void actionPerformed(ActionEvent e) {
-            JButton clickedButton = (JButton) e.getSource();
+        public void actionPerformed(ActionEvent event) {
+            JButton clickedButton = (JButton) event.getSource();
             Point buttonLocation = clickedButton.getLocationOnScreen();
 
             JDialog numberDialog = new JDialog((Frame) SwingUtilities.getWindowAncestor(SudokuPanel.this), true);
@@ -171,22 +176,9 @@ public class SudokuPanel extends JPanel {
             // Position the dialog near the clicked button
             numberDialog.setLocation(buttonLocation.x, buttonLocation.y + clickedButton.getHeight());
 
-            // Add a mouse listener to close the dialog when clicking outside of it
-            numberDialog.addMouseListener(new MouseAdapter() {
-                //TODO: fix this cause it doesn't work
-                @Override
-                public void mouseClicked(MouseEvent e) {
-                    if (!numberDialog.getBounds().contains(e.getLocationOnScreen())) {
-                        numberDialog.dispose();
-                    }
-                    System.out.println(e.getLocationOnScreen());
-                }
-            });
-
             numberDialog.setVisible(true);
         }
     }
-
 
     //TODO: move this to gamePanel where we check possibility and save change
     private class NumberButtonListener implements ActionListener {
