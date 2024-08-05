@@ -10,14 +10,16 @@ public class GamePanel extends JPanel {
     private SudokuPanel sudokuPanel;
     private JTextField messageText;
     private SudokuFrame controller;
+    private int difficulty;
 
 
-    public GamePanel(SudokuFrame  controller_, int difficulty){
+    public GamePanel(SudokuFrame  controller_, int difficulty_){
         //TODO: start the game, load sudokuPanel, buttons and wisperer
 
         messageText = new JTextField();
-        sudokuPanel = new SudokuPanel(controller_, difficulty, messageText);
+        sudokuPanel = new SudokuPanel(controller_, difficulty_, messageText);
         controller = controller_;
+        difficulty = difficulty_;
         setLayout(new BorderLayout());
         add(sudokuPanel, BorderLayout.CENTER);
         add(messageText, BorderLayout.SOUTH);
@@ -42,7 +44,11 @@ public class GamePanel extends JPanel {
 
         JButton restartButton = new JButton("Restart");
         restartButton.addActionListener(e -> {
-            //TODO: reload whole grid in sudokuPanel probably I'll just reset the sudokuPanel
+            sudokuPanel.setVisible(false);  //without this it doesn't remove it in time, but after the click
+            remove(sudokuPanel);
+            sudokuPanel = new SudokuPanel(controller, difficulty, messageText);
+            add(sudokuPanel, BorderLayout.CENTER);
+
         });
 
         JButton autoFillButton = new JButton("Auto fill");
