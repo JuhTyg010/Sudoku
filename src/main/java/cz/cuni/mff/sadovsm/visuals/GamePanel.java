@@ -9,13 +9,15 @@ public class GamePanel extends JPanel {
 
     private SudokuPanel sudokuPanel;
     private JTextField messageText;
+    private SudokuFrame controller;
 
 
-    public GamePanel(int difficulty){
+    public GamePanel(SudokuFrame  controller_, int difficulty){
         //TODO: start the game, load sudokuPanel, buttons and wisperer
 
         messageText = new JTextField();
-        sudokuPanel = new SudokuPanel(difficulty, messageText);
+        sudokuPanel = new SudokuPanel(controller_, difficulty, messageText);
+        controller = controller_;
         setLayout(new BorderLayout());
         add(sudokuPanel, BorderLayout.CENTER);
         add(messageText, BorderLayout.SOUTH);
