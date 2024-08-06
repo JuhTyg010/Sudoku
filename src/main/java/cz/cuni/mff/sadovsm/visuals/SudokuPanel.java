@@ -14,14 +14,14 @@ import javax.swing.border.MatteBorder;
 import javax.swing.plaf.ColorUIResource;
 
 public class SudokuPanel extends JPanel {
-    private JButton[][] cells;
+    private final JButton[][] cells;
 
     private static final int EMPTY_CELL = 0;
     private int[][] grid;
-    private Stack<int[]> moves;
+    private final Stack<int[]> moves;
     private int toComplete;
-    private JTextField messageText;
-    private SudokuFrame controller;
+    private final JTextField messageText;
+    private final SudokuFrame controller;
 
     @Override
     public Dimension getPreferredSize() {
@@ -30,15 +30,11 @@ public class SudokuPanel extends JPanel {
         return new Dimension(newSize, newSize);
     }
 
-
-
-
     public SudokuPanel(SudokuFrame controller_, int difficulty, JTextField messageText_) {
         messageText = messageText_;
         controller = controller_;
         moves = new Stack<>();
         toComplete = 9 * 9;
-
 
         setLayout(new GridLayout(9, 9));
         UIManager.put("Button.disabledText", new ColorUIResource(Color.BLACK)); // To edit color of the disabled buttons(positions)
@@ -84,10 +80,6 @@ public class SudokuPanel extends JPanel {
         lockPrefilled();
     }
 
-    public boolean isFinished(){
-        return toComplete == 0;
-    }
-
     public int[][] getGrid(){
         return grid;
     }
@@ -99,7 +91,6 @@ public class SudokuPanel extends JPanel {
             end.setVisible(true);
         }
     }
-
 
     public String autofill(){
         int[] hint = SudokuSolveHinter.posHint(grid);
@@ -149,8 +140,8 @@ public class SudokuPanel extends JPanel {
     }
 
     private class CellButtonListener implements ActionListener {
-        private int row;
-        private int col;
+        private final int row;
+        private final int col;
 
         public CellButtonListener(int row, int col) {
             this.row = row;
@@ -182,10 +173,10 @@ public class SudokuPanel extends JPanel {
     }
 
     private class NumberButtonListener implements ActionListener {
-        private int row;
-        private int col;
-        private int number;
-        private JDialog dialog;
+        private final int row;
+        private final int col;
+        private final int number;
+        private final JDialog dialog;
 
         public NumberButtonListener(int row, int col, int number, JDialog dialog) {
             this.row = row;
