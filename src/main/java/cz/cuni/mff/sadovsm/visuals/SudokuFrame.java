@@ -21,7 +21,6 @@ public class SudokuFrame extends JFrame {
         menuPanel = new MenuPanel(this);
         setLayout(new BorderLayout());
         add(menuPanel, BorderLayout.CENTER);
-
     }
 
     public void gameStart(int difficulty){
@@ -33,10 +32,13 @@ public class SudokuFrame extends JFrame {
 
     public JDialog GameEnd(){
         JDialog endDialog = new JDialog(this, "Game end");
+        final int width = 300;
+        final int height = 150;
 
         endDialog.setUndecorated(true);
-        endDialog.setSize(300,150);
-        endDialog.setLocationRelativeTo(null);
+        endDialog.setSize(width,height);
+        endDialog.setLocation(getLocation().x + getWidth()/2 - width / 2,
+                getLocation().y + getHeight() / 2 - height / 2);
 
         JLabel text = new JLabel("Congratulation");
         text.setFont(new Font("Arial", Font.BOLD, 30));
@@ -59,7 +61,6 @@ public class SudokuFrame extends JFrame {
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.weightx = 2;
         gbc.weighty = 2;
-        gbc.fill = GridBagConstraints.NONE;
 
         gbc.gridx = 0;
         gbc.gridy = 0;
@@ -67,16 +68,11 @@ public class SudokuFrame extends JFrame {
         gbc.gridwidth = 2;
         endDialog.add(text, gbc);
 
-        gbc.gridx = 0;
         gbc.gridy = 1;
-        gbc.gridheight = 1;
         gbc.gridwidth = 1;
         endDialog.add(menuButton, gbc);
 
         gbc.gridx = 1;
-        gbc.gridy = 1;
-        gbc.gridheight = 1;
-        gbc.gridwidth = 1;
         endDialog.add(exitButton, gbc);
 
         return endDialog;
