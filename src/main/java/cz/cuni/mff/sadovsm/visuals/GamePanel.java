@@ -4,15 +4,13 @@ import cz.cuni.mff.sadovsm.sudoku.SudokuSolveHinter;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ComponentEvent;
-import java.awt.event.ComponentListener;
 
 public class GamePanel extends JPanel {
 
     private SudokuPanel sudokuPanel;
-    private JTextField messageText;
-    private SudokuFrame controller;
-    private int difficulty;
+    private final JTextField messageText;
+    private final SudokuFrame controller;
+    private final int difficulty;
 
 
     public GamePanel(SudokuFrame  controller_, int difficulty_){
@@ -68,15 +66,10 @@ public class GamePanel extends JPanel {
         });
 
         JButton autoFillButton = new JButton("Auto fill");
-        autoFillButton.addActionListener(e -> {
-            messageText.setText(sudokuPanel.autofill());
-        });
+        autoFillButton.addActionListener(e -> messageText.setText(sudokuPanel.autofill()));
 
         JButton undoButton = new JButton("←");
-        undoButton.addActionListener(e -> {
-            messageText.setText(sudokuPanel.undo());
-        });
-
+        undoButton.addActionListener(e -> messageText.setText(sudokuPanel.undo()));
 
         panel.add(undoButton);
         panel.add(hintButton);

@@ -2,13 +2,10 @@ package cz.cuni.mff.sadovsm.visuals;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
-import java.awt.event.ComponentListener;
 
 public class SudokuFrame extends JFrame {
     private GamePanel gamePanel;
-    private MenuPanel menuPanel;
+    private final MenuPanel menuPanel;
     private static final int WIDTH = 600;
     private static final int HEIGHT = 400;
 
@@ -52,9 +49,7 @@ public class SudokuFrame extends JFrame {
         menuButton.setPreferredSize(new Dimension(120,40));
 
         JButton exitButton = new JButton("Exit");
-        exitButton.addActionListener(e -> {
-            System.exit(0);
-        });
+        exitButton.addActionListener(e -> System.exit(0));
         exitButton.setPreferredSize(new Dimension(120,40));
 
         endDialog.setLayout(new GridBagLayout());

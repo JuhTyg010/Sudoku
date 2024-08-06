@@ -88,6 +88,7 @@ public class MenuPanel extends JPanel {
 
     private void openDocumentation() {
         try {
+            //TODO: this should be like working
             Desktop.getDesktop().browse(new URI("http://todo_this_link.com"));
         } catch (Exception ex) {
             ex.printStackTrace();
