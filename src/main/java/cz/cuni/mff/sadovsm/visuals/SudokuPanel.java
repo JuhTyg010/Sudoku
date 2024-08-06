@@ -26,11 +26,12 @@ public class SudokuPanel extends JPanel {
     @Override
     public Dimension getPreferredSize() {
         Dimension size = controller.getSize();
-        System.out.println(String.format("%d %d",size.height * 2 / 3, size.width));
-        int newSize = Math.min(size.width, size.height * 2 / 3);
+        System.out.println(String.format("%d %d",size.height - 100, size.width - 10));
+        int newSize = Math.min(size.width - 10, size.height - 100);
         System.out.println(newSize);
         return new Dimension(newSize, newSize);
     }
+
 
 
 
