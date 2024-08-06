@@ -9,13 +9,13 @@ import java.awt.event.ComponentListener;
 public class SudokuFrame extends JFrame {
     private GamePanel gamePanel;
     private MenuPanel menuPanel;
-    private final int WIDTH = 600;
-    private final int HEIGHT = 400;
+    private static final int WIDTH = 600;
+    private static final int HEIGHT = 400;
 
     public SudokuFrame() {
         setTitle("Sudoku");
         setSize(WIDTH, HEIGHT);
-        setMinimumSize(new Dimension(300,230));
+        setMinimumSize(new Dimension(300,240));
         setLocationRelativeTo(null);
 
         menuPanel = new MenuPanel(this);
@@ -23,7 +23,6 @@ public class SudokuFrame extends JFrame {
         add(menuPanel, BorderLayout.CENTER);
 
     }
-
 
     public void gameStart(int difficulty){
         gamePanel = new GamePanel(this, difficulty);
