@@ -4,6 +4,8 @@ import cz.cuni.mff.sadovsm.sudoku.SudokuSolveHinter;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
 
 public class GamePanel extends JPanel {
 
@@ -29,10 +31,9 @@ public class GamePanel extends JPanel {
         gbc.gridy = 1;
         gbc.gridheight = 2;
         gbc.gridwidth = 1;
-        gbc.fill = GridBagConstraints.BOTH;
         add(sudokuPanel, gbc);
 
-        gbc.fill = GridBagConstraints.NONE;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.gridy = 3;
         gbc.gridheight = 1;
         add(messageText, gbc);
@@ -84,10 +85,6 @@ public class GamePanel extends JPanel {
 
         return panel;
     }
-
-
-
-
 
 
 
