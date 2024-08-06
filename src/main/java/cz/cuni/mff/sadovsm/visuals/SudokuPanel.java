@@ -26,9 +26,7 @@ public class SudokuPanel extends JPanel {
     @Override
     public Dimension getPreferredSize() {
         Dimension size = controller.getSize();
-        System.out.println(String.format("%d %d",size.height - 100, size.width - 10));
         int newSize = Math.min(size.width - 10, size.height - 100);
-        System.out.println(newSize);
         return new Dimension(newSize, newSize);
     }
 
@@ -96,11 +94,8 @@ public class SudokuPanel extends JPanel {
 
     public void setCellValue(int row, int col, int value) {
         cells[row][col].setText(value == EMPTY_CELL ? "" : String.valueOf(value));
-        System.out.println(toComplete);
         if(toComplete <= 0){
             JDialog end = controller.GameEnd();
-
-            System.out.println("done");
             end.setVisible(true);
         }
     }
