@@ -2,6 +2,9 @@ package cz.cuni.mff.sadovsm.visuals;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
 
 public class SudokuFrame extends JFrame {
     private GamePanel gamePanel;
@@ -9,20 +12,18 @@ public class SudokuFrame extends JFrame {
     private final int WIDTH = 600;
     private final int HEIGHT = 400;
 
-
     public SudokuFrame() {
         setTitle("Sudoku");
         setSize(WIDTH, HEIGHT);
+        setMinimumSize(new Dimension(300,230));
         setLocationRelativeTo(null);
 
-        // Create panels
         menuPanel = new MenuPanel(this);
-
-
-        // Add panels to the frame
         setLayout(new BorderLayout());
         add(menuPanel, BorderLayout.CENTER);
+
     }
+
 
     public void gameStart(int difficulty){
         gamePanel = new GamePanel(this, difficulty);
