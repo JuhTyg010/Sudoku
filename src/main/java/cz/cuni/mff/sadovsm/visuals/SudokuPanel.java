@@ -23,6 +23,16 @@ public class SudokuPanel extends JPanel {
     private JTextField messageText;
     private SudokuFrame controller;
 
+    @Override
+    public Dimension getPreferredSize() {
+        Dimension size = controller.getSize();
+        System.out.println(String.format("%d %d",size.height * 2 / 3, size.width));
+        int newSize = Math.min(size.width, size.height * 2 / 3);
+        System.out.println(newSize);
+        return new Dimension(newSize, newSize);
+    }
+
+
 
     public SudokuPanel(SudokuFrame controller_, int difficulty, JTextField messageText_) {
         messageText = messageText_;
@@ -30,10 +40,6 @@ public class SudokuPanel extends JPanel {
         moves = new Stack<>();
         toComplete = 9 * 9;
 
-        /*int width = this.getWidth();
-        int height = this.getHeight();
-        if (width > height) setPreferredSize(new Dimension(height,height));
-        else setPreferredSize(new Dimension(width,width));*/
 
         setLayout(new GridLayout(9, 9));
         UIManager.put("Button.disabledText", new ColorUIResource(Color.BLACK)); // To edit color of the disabled buttons(positions)
