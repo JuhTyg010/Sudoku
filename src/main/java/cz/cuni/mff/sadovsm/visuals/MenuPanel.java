@@ -11,8 +11,12 @@ public class MenuPanel extends JPanel {
 
     private final SudokuFrame controller;
 
+    /**
+     * Instantiates a new Menu panel.
+     *
+     * @param controller_ the frame of the game
+     */
     public MenuPanel(SudokuFrame controller_) {
-
 
         controller = controller_;
         JButton startButton = new JButton("Start");
@@ -44,7 +48,6 @@ public class MenuPanel extends JPanel {
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.weightx = 1;
         gbc.weighty = 4;
-
 
         gbc.gridx = 0;
         gbc.gridy = 0;
