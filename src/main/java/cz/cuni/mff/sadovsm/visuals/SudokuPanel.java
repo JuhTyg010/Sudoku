@@ -1,6 +1,5 @@
 package cz.cuni.mff.sadovsm.visuals;
 
-
 import cz.cuni.mff.sadovsm.sudoku.SudokuGenerator;
 import cz.cuni.mff.sadovsm.sudoku.SudokuSolveHinter;
 import cz.cuni.mff.sadovsm.sudoku.SudokuValidator;
@@ -13,15 +12,19 @@ import javax.swing.border.Border;
 import javax.swing.border.MatteBorder;
 import javax.swing.plaf.ColorUIResource;
 
+/**
+ * The type Sudoku panel.
+ */
 public class SudokuPanel extends JPanel {
     private final JButton[][] cells;
+    private final JTextField messageText;
+    private final SudokuFrame controller;
 
     private static final int EMPTY_CELL = 0;
     private int[][] grid;
     private final Stack<int[]> moves;
     private int toComplete;
-    private final JTextField messageText;
-    private final SudokuFrame controller;
+
 
     @Override
     public Dimension getPreferredSize() {
@@ -30,6 +33,13 @@ public class SudokuPanel extends JPanel {
         return new Dimension(newSize, newSize);
     }
 
+    /**
+     * Instantiates a new Sudoku panel.
+     *
+     * @param controller_  the frame of the game
+     * @param difficulty   the difficulty level of the game
+     * @param messageText_ place where to display game related messages
+     */
     public SudokuPanel(SudokuFrame controller_, int difficulty, JTextField messageText_) {
         messageText = messageText_;
         controller = controller_;
@@ -67,6 +77,7 @@ public class SudokuPanel extends JPanel {
         messageText_.setText("welcome");
 
     }
+
     private void doPrefill(int difficulty){
         grid = SudokuGenerator.generateSudoku(difficulty);
         for(int i = 0; i < 9 ; i++){
@@ -80,11 +91,16 @@ public class SudokuPanel extends JPanel {
         lockPrefilled();
     }
 
+    /**
+     * Getter for the grid representing
+     *
+     * @return the int [ ][ ] the grid
+     */
     public int[][] getGrid(){
         return grid;
     }
 
-    public void setCellValue(int row, int col, int value) {
+    private void setCellValue(int row, int col, int value) {
         cells[row][col].setText(value == EMPTY_CELL ? "" : String.valueOf(value));
         if(toComplete <= 0){
             JDialog end = controller.GameEnd();
@@ -92,6 +108,11 @@ public class SudokuPanel extends JPanel {
         }
     }
 
+    /**
+     * Autofill one cell of the sudoku.
+     *
+     * @return the string message, explaining what happened
+     */
     public String autofill(){
         int[] hint = SudokuSolveHinter.posHint(grid);
         if(hint[0] == -1){
@@ -104,6 +125,11 @@ public class SudokuPanel extends JPanel {
         return "One value was successfully filled";
     }
 
+    /**
+     * Undo removes last added number in the sudoku
+     *
+     * @return the string explaining what was removed
+     */
     public String undo(){
         if(moves.isEmpty()){
             return "There is no move which can be undone";
@@ -118,7 +144,7 @@ public class SudokuPanel extends JPanel {
         return "Moved back, but sudoku still isn't solvable";
     }
 
-    public void lockPrefilled(){
+    private void lockPrefilled(){
         for (JButton[] cell : cells) {
             for (int j = 0; j < cells[0].length; j++) {
                 if (!cell[j].getText().isEmpty()) {
@@ -143,6 +169,12 @@ public class SudokuPanel extends JPanel {
         private final int row;
         private final int col;
 
+        /**
+         * Instantiates a new Cell button listener.
+         *
+         * @param row the row of the cell
+         * @param col the col of the cell
+         */
         public CellButtonListener(int row, int col) {
             this.row = row;
             this.col = col;
@@ -164,10 +196,7 @@ public class SudokuPanel extends JPanel {
                 numberButton.addActionListener(new NumberButtonListener(row, col, i, numberDialog));
                 numberDialog.add(numberButton);
             }
-
-            // Position the dialog near the clicked button
             numberDialog.setLocation(buttonLocation.x, buttonLocation.y + clickedButton.getHeight());
-
             numberDialog.setVisible(true);
         }
     }
@@ -178,6 +207,14 @@ public class SudokuPanel extends JPanel {
         private final int number;
         private final JDialog dialog;
 
+        /**
+         * Instantiates a new Number button listener.
+         *
+         * @param row    the row of the sudoku
+         * @param col    the col of the sudoku
+         * @param number the number it represents
+         * @param dialog the dialog in which it is
+         */
         public NumberButtonListener(int row, int col, int number, JDialog dialog) {
             this.row = row;
             this.col = col;
