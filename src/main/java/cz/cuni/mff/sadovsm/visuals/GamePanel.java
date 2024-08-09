@@ -13,13 +13,19 @@ public class GamePanel extends JPanel {
     private final int difficulty;
 
 
+    /**
+     * Instantiates a new Game panel.
+     *
+     * @param controller_ the frame of the game
+     * @param difficulty_ the difficulty level of the game
+     */
     public GamePanel(SudokuFrame  controller_, int difficulty_){
-        //TODO: start the game, load sudokuPanel, buttons and wisperer
 
         messageText = new JTextField();
         sudokuPanel = new SudokuPanel(controller_, difficulty_, messageText);
         controller = controller_;
         difficulty = difficulty_;
+
         setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.weighty = 4;
@@ -78,7 +84,5 @@ public class GamePanel extends JPanel {
 
         return panel;
     }
-
-
-
+    
 }
