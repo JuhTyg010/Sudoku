@@ -92,9 +92,9 @@ public class MenuPanel extends JPanel {
     private void openDocumentation() {
         try {
             //TODO: this should be like working
-            Desktop.getDesktop().browse(new URI("http://todo_this_link.com"));
+            Desktop.getDesktop().browse(new URI("https://github.com/JuhTyg010/Sudoku/blob/master/User_documentation.txt"));
         } catch (Exception ex) {
-            ex.printStackTrace();
+            System.out.println("Error occurred");
         }
     }
 }

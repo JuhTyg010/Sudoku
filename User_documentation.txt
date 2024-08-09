@@ -1,4 +1,4 @@
-User documentation
+CLI version
 
 To run the application you need to build package and run it with the following command:
 
@@ -47,3 +47,14 @@ If you fill something incorrectly but the mistake is not visible yet, the applic
 If it's visible the application won't let you fill the cell with the wrong value.
 
 After solving the sudoku program will show you the solution and close.
+
+Graphics version
+
+
+To run the application you need to build package and run it with the following command:
+
+in this directory run:
+mvn package
+java -cp target/Sudoku-1.0.jar cz.cuni.mff.sadovsm.GraphicsApp
+
+Application load the game and shows you intuitive menu
