@@ -12,9 +12,6 @@ import javax.swing.border.Border;
 import javax.swing.border.MatteBorder;
 import javax.swing.plaf.ColorUIResource;
 
-/**
- * The type Sudoku panel.
- */
 public class SudokuPanel extends JPanel {
     private final JButton[][] cells;
     private final JTextField messageText;
