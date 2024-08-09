@@ -9,6 +9,9 @@ public class SudokuFrame extends JFrame {
     private static final int WIDTH = 600;
     private static final int HEIGHT = 400;
 
+    /**
+     * Instantiates a new Sudoku frame.
+     */
     public SudokuFrame() {
         setTitle("Sudoku");
         setSize(WIDTH, HEIGHT);
@@ -20,6 +23,11 @@ public class SudokuFrame extends JFrame {
         add(menuPanel, BorderLayout.CENTER);
     }
 
+    /**
+     * Function to switch from menu to the game
+     *
+     * @param difficulty the difficulty level of the game
+     */
     public void gameStart(int difficulty){
         gamePanel = new GamePanel(this, difficulty);
         setLayout(new BorderLayout());
@@ -27,6 +35,11 @@ public class SudokuFrame extends JFrame {
         menuPanel.setVisible(false);
     }
 
+    /**
+     * Dialog which is displayed after the game ends
+     *
+     * @return the dialog
+     */
     public JDialog GameEnd(){
         JDialog endDialog = new JDialog(this, "Game end");
         final int width = 300;
